@@ -4,28 +4,18 @@ from reflex import color
 
 
 class State(rx.State):
-    """The app state."""
-
     url: str = ""
-    file_content: str = ""
-    file_name: str = ""
-
-    async def handle_upload(self, files: list[rx.UploadFile]):
-        """Handle the upload of file(s)."""
-        for file in files:
-            content = await file.read()
-            # Decode the content assuming it's a text file
-            self.file_content = content.decode('utf-8')
-            self.file_name = file.filename
+    details: str = ""
 
     async def handle_submit(self, form_data: dict):
         """Handle the form submission."""
         self.url = form_data.get("url", "")
+        self.details = form_data.get("details", "")
 
-    def clear_file(self):
-        """Clear the file content and name."""
-        self.file_content = ""
-        self.file_name = ""
+    def clear_fields(self):
+        """Clear the input fields."""
+        self.url = ""
+        self.details = ""
 
 def navbar_link(text: str, url: str) -> rx.Component:
     return rx.link(
@@ -235,56 +225,37 @@ def feature_card(title: str, description: str, icon: str) -> rx.Component:
 
 def url_input():
     return rx.input(
-        placeholder="URL",
+        placeholder="Enter URL",
         name="url",
         align="center",
         border="1px solid rgb(245,225,71)",
         margin_bottom='1em',
+        padding="0.5em 1em",
+        border_radius="md",
     )
 
-def file_upload():
-    return rx.vstack(
-        rx.upload(
-            rx.vstack(
-                rx.button(
-                    "Select File",
-                    color="black",
-                    bg=rx.color("yellow", shade=11),
-                    border="1px solid rgb(245,225,71)",
-                    align="center"
-                ),
-                rx.text(
-                    "Drag and drop text file here or click to select"
-                ),
-                align='center'
-            ),
-            id="readme",
-            border="2px solid rgb(245,225,71)",
-            padding="5em",
-            accept={".txt": []},  # Only accept .txt files
-            align="center",
-            border_radius='20px'
-        ),
-        rx.hstack(rx.foreach(rx.selected_files("readme"), rx.text)),
-        rx.hstack(
-            rx.button(
-                "Upload",
-                on_click=State.handle_upload(rx.upload_files(upload_id="readme")),
-                color="black",
-                bg=rx.color("yellow", shade=11),
-                margin_right='343px'
-            ),
-            rx.button(
-                "Clear",
-                color="black",
-                bg=rx.color("yellow", shade=11),
-                on_click=[
-                    rx.clear_selected_files("readme"),
-                    State.clear_file
-                ],
-            ),
-        ),
+def large_text_input():
+    return rx.text_area(
+        placeholder="Enter detailed information...",
+        name="details",
+        align="center",
+        border="1px solid rgb(245,225,71)",
+        margin_bottom='1em',
+        padding="1em",
+        border_radius="md",
+        width="100%",
+        height="150px",
+    )
 
+def clear_button():
+    return rx.button(
+        "Clear",
+        color="black",
+        bg=rx.color("yellow", shade=11),
+        on_click=State.clear_fields,
+        padding="0.5em 2em",
+        border_radius="md",
+        _hover={"bg": "rgb(245,225,71)"},
     )
 
 def inputs():
@@ -292,12 +263,19 @@ def inputs():
         rx.form(
             rx.vstack(
                 url_input(),
-                file_upload(),
-                rx.button(
-                    "Analyze UI",
-                    type="submit",
-                    color="black",
-                    bg=rx.color("yellow", shade=11)
+                large_text_input(),
+                rx.hstack(
+                    rx.button(
+                        "Analyze UI",
+                        type="submit",
+                        color="black",
+                        bg=rx.color("yellow", shade=11),
+                        padding="0.5em 2em",
+                        border_radius="md",
+                        _hover={"bg": "rgb(245,225,71)"},
+                    ),
+                    clear_button(),  # Add the Clear button here
+                    spacing="1em"
                 ),
                 align_items="center",
                 justify_content="center",
@@ -306,26 +284,16 @@ def inputs():
             reset_on_submit=True,
             align_items="center",
             justify_content="center",
+            width="100%",
+            max_width="600px",
+            padding="2em",
         ),
         rx.divider(),
-        rx.heading("Results"),
-        rx.text(State.url),
-        rx.cond(
-            State.file_name != "",
-            rx.vstack(
-                rx.text("Uploaded file: " + State.file_name),
-                rx.text("File content:"),
-                rx.text_area(
-                    value=State.file_content,
-                    is_read_only=True,
-                    width="100%",
-                    height="200px",
-                ),
-            ),
-        ),
+        rx.heading("Results", size="lg", margin_top='2em'),
+        rx.text("URL: " + State.url),
+        rx.text("Details: " + State.details),
         align_items="center",
         justify_content="center",
-        margin_top="4em"
     )
 
 def dashboard():
@@ -449,7 +417,14 @@ def about() -> rx.Component:
         rx.logo(),
     )
 
+def loading():
+    rx.box(
+
+
+    )
+
 app = rx.App()
 app.add_page(index)
 app.add_page(dashboard)
 app.add_page(about)
+app.add_page(loading)
