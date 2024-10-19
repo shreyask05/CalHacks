@@ -1,9 +1,6 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 
 import reflex as rx
-from docutils.parsers.rst.directives.tables import align
-
-from rxconfig import config
 
 
 class State(rx.State):
@@ -42,7 +39,7 @@ def index() -> rx.Component:
 
 def navbar_link(text: str, url: str) -> rx.Component:
     return rx.link(
-        rx.text(text, size="4", weight="medium"), href=url
+        rx.text(text, size="4", weight="medium"), href=url, color="black"
     )
 
 
