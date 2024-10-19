@@ -49,6 +49,7 @@ client = Groq(
     api_key="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",
 )
 def get_actionlist(webapp: str) -> ActionList:
+    f = open("log.json", "a")
     # Loop through each chunk of the context
     for chunk in chunked_context:
         chat_completion = client.chat.completions.create(
@@ -67,7 +68,10 @@ def get_actionlist(webapp: str) -> ActionList:
             stream=False,
             response_format= {"type": "json_object"},
         )
-        print(chat_completion.choices[0].message.content)
+        #print(chat_completion.choices[0].message.content)
+             
+        f.write(chat_completion.choices[0].message.content)
+        f.close()
 
         # Validate and return the Action List for this chunk
         return ActionList.model_validate_json(chat_completion.choices[0].message.content)
@@ -75,13 +79,21 @@ def get_actionlist(webapp: str) -> ActionList:
 def print_ActionList(actionlist: ActionList):
     print("Action List", actionlist.webapp)
     print("\nActions:")
+
+
+    f.write("Action List", actionlist.webapp)
+    f.write("\nActions:")
     for action in actionlist.actions:
         print(
             f"- {action.name}: {action.description}"
         )
+        
+        f.write(
+            f"- {action.name}: {action.description}"
+        )
+    f.close()
 try:
     webapp = get_actionlist(chunked_context)
     print_ActionList(webapp)
 except ValidationError as e:
     print(f"ValidationError: {e}")
-
