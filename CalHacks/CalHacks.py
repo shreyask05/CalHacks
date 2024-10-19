@@ -1,6 +1,7 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 
 import reflex as rx
+from docutils.parsers.rst.directives.tables import align
 
 from rxconfig import config
 
@@ -51,7 +52,8 @@ def navbar() -> rx.Component:
             rx.hstack(
                 rx.hstack(
                     rx.heading(
-                        "Swarm", size="7", weight="bold"
+                        "Swarm", size="7", weight="bold", color="black"
+
                     ),
                     align_items="left",
                 ),
@@ -91,7 +93,7 @@ def navbar() -> rx.Component:
                 align_items="center",
             ),
         ),
-        bg=rx.color("accent", 3),
+        bg=rx.color("yellow", shade=11),
         padding="1em",
         # position="fixed",
         # top="0px",
@@ -106,33 +108,53 @@ class FormState(rx.State):
         """Handle the form submit."""
         self.form_data = form_data
 
-
+color = "rgb(107,99,246)"
 def form():
     return rx.vstack(
         rx.form(
             rx.vstack(
                 rx.input(
-                    placeholder="First Name",
-                    name="first_name",
+                    placeholder="URL",
+                    name="url",
+                    align="center"
                 ),
-                rx.input(
-                    placeholder="Last Name",
-                    name="last_name",
+                rx.upload(
+                    rx.vstack(
+                        rx.button(
+                            "Select File",
+                            color=color,
+                            bg="white",
+                            border=f"1px solid {color}",
+                            align="center"
+                        ),
+                        rx.text(
+                            "Drag and drop files here or click to select files"
+                        ),
+                        align="center"
+                    ),
+                    id="upload1",
+                    border=f"1px dotted {color}",
+                    padding="5em",
                 ),
                 rx.hstack(
                     rx.checkbox("Checked", name="check"),
                     rx.switch("Switched", name="switch"),
                 ),
-                rx.button("Submit", type="submit"),
+                rx.button("Analyze UI", type="submit"),
+                align_items="center",
+                justify_content="center",
             ),
             on_submit=FormState.handle_submit,
             reset_on_submit=True,
+            align_items="center",
+            justify_content="center",
         ),
         rx.divider(),
         rx.heading("Results"),
         rx.text(FormState.form_data.to_string()),
+        align_items="center",
+        justify_content="center",
     )
-
 
 
 def about():
