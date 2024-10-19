@@ -97,14 +97,18 @@ def index():
     return rx.box(
         navbar(),
         rx.vstack(
-            rx.heading("Welcome to Swarm", size="9"),
+            rx.heading(
+                "Welcome to Swarm",
+                size="9",
+                margin_top="1em"
+            ),
             rx.text(
                 "Test your product's user experience with ease",
                 size="5",
                 color="rgb(244, 191, 12)",
-                margin_bottom="2em",
+                margin_bottom="1em",
             ),
-            rx.divider(margin_y="2em"),
+            rx.divider(margin_y="1em"),
             rx.heading("Why Choose Swarm?", size="7", margin_bottom="1em"),
             rx.hstack(
                 feature_card(
@@ -127,7 +131,7 @@ def index():
                 justify="center",
             ),
             rx.divider(margin_y="2em"),
-            rx.heading("How It Works", size="7", margin_bottom="1em"),
+            rx.heading("How It Works", size="7", margin_bottom="10px"),
             how_it_works_section(),
             rx.divider(margin_y="2em"),
             rx.heading("Get Started Today", size="7", margin_bottom="1em"),
@@ -153,25 +157,35 @@ def index():
 def how_it_works_section():
     return rx.box(
         rx.vstack(
-            rx.ordered_list(
-                rx.list_item(
-                    rx.text("Upload your design or provide a URL for instant analysis.", font_size="lg", color="gray.700")
-                ),
-                rx.list_item(
-                    rx.text("Our AI performs a comprehensive analysis of your UI/UX.", font_size="lg", color="gray.700")
-                ),
-                rx.list_item(
-                    rx.text("Receive actionable insights to enhance your product.", font_size="lg", color="gray.700")
-                ),
-                spacing="1em",
-                padding_left="1em",
+            rx.text(
+                "Upload your design or provide a URL for instant analysis.",
+                size="5",
+                color="white",
+                align="center",
+                margin_bottom="10px"
             ),
-            width="100%",
-            max_width="800px",
-            margin="0 auto",
-            padding="2em",
-        )
+            rx.text("Our AI performs a comprehensive analysis of your UI/UX.",
+                size="5",
+                color="white",
+                align="center",
+                margin_bottom="10px"
+            ),
+            rx.text(
+                "Receive actionable insights to enhance your product.",
+                size="5",
+                color="white",
+                align="center"
+            ),
+            align="center",
+
+        ),
+        align="center",
+        border="1px solid",
+        border_color="rgb(244, 191, 12)",
+        border_radius="2em",
+        padding="2em"
     )
+
 
 def step_card(title: str, description: str, icon: str) -> rx.Component:
     return rx.box(
