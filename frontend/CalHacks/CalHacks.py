@@ -225,7 +225,7 @@ def feature_card(title: str, description: str, icon: str) -> rx.Component:
         box_shadow="lg",
         _hover={
             "transform": "translateY(-12px)",
-            "box_shadow": "xl",
+            "box_shadow": "xl"
         },
         transition="all 0.3s ease-in-out",
     )
@@ -312,14 +312,15 @@ def dashboard():
 
 def team_member(name: str, role: str, image: str) -> rx.Component:
     return rx.vstack(
-        rx.avatar(name=name, size="xl", src=image),
-        rx.text(name, font_weight="bold"),
-        rx.text(role, color="gray"),
+        rx.avatar(name=name, size="7", src=image),
+        rx.text(name, font_weight="bold", color="black"),
+        rx.text(role, color="black"),
+        height="100%",
         bg="white",
         padding="1em",
         border_radius="lg",
         box_shadow="lg",
-        _hover={"transform": "scale(1.05)"},
+        _hover={"transform": "scale(1.1)"},
         transition="all 0.2s ease-in-out",
     )
 
@@ -330,7 +331,7 @@ def about() -> rx.Component:
             rx.heading("About Swarm", size="9", margin_bottom="1em"),
             rx.text(
                 "Revolutionizing UI/UX Testing with AI",
-                color=rx.color("yellow", shade=11),
+                color="rgb(244, 191, 12)",
                 font_size="2xl",
                 margin_bottom="2em",
             ),
@@ -346,23 +347,17 @@ def about() -> rx.Component:
                     align_items="start",
                     width="50%",
                 ),
-                rx.image(
-                    src="/aboutimage.jpg",  # Replace with your actual image
-                    height="300px",
-                    width="50%",
-                    object_fit="cover",
-                    border_radius="lg",
-                ),
+                rx.image(src="/swarm.png", height="15em", width="20em", radius="20px"),
                 width="100%",
                 margin_bottom="3em",
             ),
             rx.divider(),
             rx.heading("Our Team", size="7", margin_y="1em"),
             rx.hstack(
-                team_member("Alice Johnson", "Founder & CEO", "/alice.jpg"),
-                team_member("Bob Smith", "CTO", "/bob.jpg"),
-                team_member("Carol Davis", "Lead Designer", "/carol.jpg"),
-                team_member("David Brown", "AI Specialist", "/david.jpg"),
+                team_member("Shreyas Konanki", "Founder & CEO", "/swarm.png"),
+                team_member("Rohan Bopardikar", "CTO", "/images.jpg"),
+                team_member("Harshith Senthilkumaran", "Lead Designer", "/carol.jpg"),
+                team_member("Darsh Verma", "AI Specialist", "/david.jpg"),
                 spacing="8",
                 justify="center",
                 wrap="wrap",
