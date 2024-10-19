@@ -16,16 +16,21 @@ def index() -> rx.Component:
     return rx.container(
         rx.color_mode.button(position="top-right"),
         rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
+            rx.heading("Welcome to Swarm,", size="9"),
             rx.text(
-                "Code Tester!!!! ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
+                "Test your product's user experience :-) ",
                 size="5",
             ),
             rx.link(
-                rx.button("Check out our docs!"),
-                href="https://reflex.dev/docs/getting-started/introduction/",
-                is_external=True,
+                rx.button("Dashboard"),
+                href="",
+                is_external=False,
+            ),
+
+            rx.link(
+                rx.button("About"),
+                href="/about",
+                is_external=False,
             ),
             spacing="5",
             justify="center",
@@ -34,6 +39,10 @@ def index() -> rx.Component:
         rx.logo(),
     )
 
+def about():
+    return rx.text("for calhacks 24'")
+
 
 app = rx.App()
 app.add_page(index)
+app.add_page(about)
