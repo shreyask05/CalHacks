@@ -1,6 +1,7 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 import reflex as rx
 from pygments.styles.dracula import background
+from reflex import color
 
 
 class State(rx.State):
@@ -30,7 +31,7 @@ class State(rx.State):
 def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.container(
-        rx.color_mode.button(position="top-right"),
+        #rx.color_mode.button(position="top-right"),
         rx.vstack(
             rx.heading("Welcome to Swarm,", size="9"),
             rx.text(
@@ -123,17 +124,18 @@ def file_upload():
             rx.vstack(
                 rx.button(
                     "Select File",
-                    color="rgb(107,99,246)",
-                    bg="white",
-                    border="5px solid rgb(107,99,246)",
+                    color="black",
+                    bg=rx.color("yellow", shade=11),
+                    border="1px solid rgb(245,225,71)",
                     align="center"
                 ),
                 rx.text(
                     "Drag and drop text file here or click to select"
                 ),
+                align='center'
             ),
             id="readme",
-            border="1px solid rgb(107,99,246)",
+            border="2px solid rgb(245,225,71)",
             padding="5em",
             accept={".txt": []},  # Only accept .txt files
             align="center"
@@ -142,9 +144,13 @@ def file_upload():
         rx.button(
             "Upload",
             on_click=State.handle_upload(rx.upload_files(upload_id="readme")),
+            color="black",
+            bg=rx.color("yellow", shade=11)
         ),
         rx.button(
             "Clear",
+            color="black",
+            bg=rx.color("yellow", shade=11),
             on_click=[
                 rx.clear_selected_files("readme"),
                 State.clear_file
@@ -158,7 +164,12 @@ def inputs():
             rx.vstack(
                 url_input(),
                 file_upload(),
-                rx.button("Analyze UI", type="submit"),
+                rx.button(
+                    "Analyze UI",
+                    type="submit",
+                    color="black",
+                    bg=rx.color("yellow", shade=11)
+                ),
                 align_items="center",
                 justify_content="center",
             ),
@@ -192,7 +203,7 @@ def dashboard():
     return rx.box(
         navbar(),
         rx.divider(),
-        inputs()
+        inputs(),
     )
 
 def about():
