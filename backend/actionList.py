@@ -1,4 +1,3 @@
-import pdfplumber
 import json
 import requests
 import os
@@ -68,8 +67,7 @@ def get_actionlist(webapp: str) -> ActionList:
             stream=False,
             response_format= {"type": "json_object"},
         )
-        #print(chat_completion.choices[0].message.content)
-             
+
         f.write(chat_completion.choices[0].message.content)
         f.close()
 
@@ -79,21 +77,3 @@ def get_actionlist(webapp: str) -> ActionList:
 def print_ActionList(actionlist: ActionList):
     print("Action List", actionlist.webapp)
     print("\nActions:")
-
-
-    f.write("Action List", actionlist.webapp)
-    f.write("\nActions:")
-    for action in actionlist.actions:
-        print(
-            f"- {action.name}: {action.description}"
-        )
-        
-        f.write(
-            f"- {action.name}: {action.description}"
-        )
-    f.close()
-try:
-    webapp = get_actionlist(chunked_context)
-    print_ActionList(webapp)
-except ValidationError as e:
-    print(f"ValidationError: {e}")

@@ -90,7 +90,7 @@
       },
       {
          "name": "Users can view event audio",
-         "description": "Users can view any audio files associated with an event, such as podcasts or audio recordings."
+         "description": "Users can view any audio associated with an event, such as podcasts or audio recordings."
       },
       {
          "name": "Users can view event documents",
@@ -170,7 +170,7 @@
       },
       {
          "name": "Users can view event audio",
-         "description": "Users can view any audio files or podcasts associated with an event, such as audio files from attendees or podcasts from event organizers."
+         "description": "Users can view any audio or sound files associated with an event, such as audio from attendees or sound files from event organizers."
       },
       {
          "name": "Users can view event documents",
@@ -178,7 +178,7 @@
       },
       {
          "name": "Users can view event maps",
-         "description": "Users can view any maps or directions associated with an event, such as maps from attendees or directions from event organizers."
+         "description": "Users can view any maps or location information associated with an event, such as maps from attendees or location information from event organizers."
       },
       {
          "name": "Users can view event reviews",
