@@ -23,7 +23,7 @@ def index() -> rx.Component:
             ),
             rx.link(
                 rx.button("Dashboard"),
-                href="",
+                href="/dashboard",
                 is_external=False,
             ),
 
@@ -41,8 +41,10 @@ def index() -> rx.Component:
 
 def about():
     return rx.text("for calhacks 24'")
-
+def dashboard():
+    return rx.text("dashboard here")
 
 app = rx.App()
 app.add_page(index)
+app.add_page(dashboard)
 app.add_page(about)
