@@ -417,14 +417,8 @@ def about() -> rx.Component:
         rx.logo(),
     )
 
-def loading():
-    rx.box(
-
-
-    )
 
 app = rx.App()
 app.add_page(index)
 app.add_page(dashboard)
 app.add_page(about)
-app.add_page(loading)
