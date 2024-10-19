@@ -37,14 +37,24 @@ def index() -> rx.Component:
             rx.text(
                 "Test your product's user experience :-) ",
                 size="5",
+                color=rx.color("yellow", shade=11)
             ),
             rx.link(
-                rx.button("Dashboard"),
+                rx.button(
+                    "Dashboard",
+                    color="black",
+                    bg=rx.color("yellow", shade=11),
+                ),
                 href="/dashboard",
                 is_external=False,
+
             ),
             rx.link(
-                rx.button("About"),
+                rx.button(
+                    "About",
+                    color="black",
+                    bg=rx.color("yellow", shade=11),
+                ),
                 href="/about",
                 is_external=False,
             ),
@@ -57,7 +67,7 @@ def index() -> rx.Component:
 
 def navbar_link(text: str, url: str) -> rx.Component:
     return rx.link(
-        rx.text(text, size="4", weight="medium"), href=url, color="black"
+        rx.text(text, size="5", weight="medium"), href=url, color="black"
     )
 
 def navbar() -> rx.Component:
@@ -66,7 +76,7 @@ def navbar() -> rx.Component:
             rx.hstack(
                 rx.hstack(
                     rx.heading(
-                        "Swarm", size="7", weight="bold", color="black"
+                        "Swarm", size="8", weight="bold", color="black"
                     ),
                     align_items="left",
                 ),
@@ -78,6 +88,7 @@ def navbar() -> rx.Component:
                 justify="between",
                 align_items="center",
             ),
+
         ),
         rx.mobile_and_tablet(
             rx.hstack(
@@ -115,7 +126,9 @@ def url_input():
     return rx.input(
         placeholder="URL",
         name="url",
-        align="center"
+        align="center",
+        border="1px solid rgb(245,225,71)",
+        margin_bottom='1em',
     )
 
 def file_upload():
@@ -138,24 +151,29 @@ def file_upload():
             border="2px solid rgb(245,225,71)",
             padding="5em",
             accept={".txt": []},  # Only accept .txt files
-            align="center"
+            align="center",
+            border_radius='20px'
         ),
         rx.hstack(rx.foreach(rx.selected_files("readme"), rx.text)),
-        rx.button(
-            "Upload",
-            on_click=State.handle_upload(rx.upload_files(upload_id="readme")),
-            color="black",
-            bg=rx.color("yellow", shade=11)
+        rx.hstack(
+            rx.button(
+                "Upload",
+                on_click=State.handle_upload(rx.upload_files(upload_id="readme")),
+                color="black",
+                bg=rx.color("yellow", shade=11),
+                margin_right='343px'
+            ),
+            rx.button(
+                "Clear",
+                color="black",
+                bg=rx.color("yellow", shade=11),
+                on_click=[
+                    rx.clear_selected_files("readme"),
+                    State.clear_file
+                ],
+            ),
         ),
-        rx.button(
-            "Clear",
-            color="black",
-            bg=rx.color("yellow", shade=11),
-            on_click=[
-                rx.clear_selected_files("readme"),
-                State.clear_file
-            ],
-        ),
+
     )
 
 def inputs():
