@@ -1,8 +1,5 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 import reflex as rx
-from pygments.styles.dracula import background
-from reflex import color
-
 
 class State(rx.State):
     """The app state."""
@@ -28,42 +25,93 @@ class State(rx.State):
         self.file_content = ""
         self.file_name = ""
 
-def index() -> rx.Component:
-    # Welcome Page (Index)
-    return rx.container(
+def index():
+    return rx.box(
         navbar(),
-        #rx.color_mode.button(position="top-right"),
         rx.vstack(
-            rx.heading("Welcome to Swarm,", size="9"),
+            rx.heading("Welcome to Swarm", size="9"),
             rx.text(
-                "Test your product's user experience :-) ",
+                "Test your product's user experience with ease",
                 size="5",
-                color=rx.color("yellow", shade=11)
+                color=rx.color("yellow", shade=11),
+                margin_bottom="2em",
             ),
+            rx.hstack(
+                rx.link(
+                    rx.button(
+                        "Dashboard",
+                        color="black",
+                        bg=rx.color("yellow", shade=11),
+                        size="lg",
+                    ),
+                    href="/dashboard",
+                    is_external=False,
+                ),
+                rx.link(
+                    rx.button(
+                        "About",
+                        color="black",
+                        bg=rx.color("yellow", shade=11),
+                        size="lg",
+                    ),
+                    href="/about",
+                    is_external=False,
+                ),
+                spacing="5",
+            ),
+            rx.divider(margin_y="2em"),
+            rx.heading("Why Choose Swarm?", size="7", margin_bottom="1em"),
+            rx.hstack(
+                feature_card("Fast Analysis", "Analyze your UI in seconds"),
+                feature_card("Comprehensive Reports", "Get detailed insights"),
+                feature_card("User-Friendly", "Easy to use interface"),
+                spacing="4",
+                wrap="wrap",
+                justify="center",
+            ),
+            rx.divider(margin_y="2em"),
+            rx.heading("How It Works", size="7", margin_bottom="1em"),
+            rx.ordered_list(
+                rx.list_item("Upload your design or provide a URL"),
+                rx.list_item("Our AI analyzes the user experience"),
+                rx.list_item("Receive a detailed report with suggestions"),
+                margin_left="2em",
+            ),
+            rx.divider(margin_y="2em"),
+            rx.heading("Get Started Today", size="7", margin_bottom="1em"),
             rx.link(
                 rx.button(
-                    "Dashboard",
+                    "Try Swarm Now",
                     color="black",
                     bg=rx.color("yellow", shade=11),
+                    size="lg",
                 ),
                 href="/dashboard",
-                is_external=False,
-
-            ),
-            rx.link(
-                rx.button(
-                    "About",
-                    color="black",
-                    bg=rx.color("yellow", shade=11),
-                ),
-                href="/about",
                 is_external=False,
             ),
             spacing="5",
             justify="center",
+            align_items="center",
             min_height="85vh",
+            padding_y="2em",
         ),
         rx.logo(),
+    )
+
+def feature_card(title: str, description: str) -> rx.Component:
+    return rx.box(
+        rx.vstack(
+            rx.heading(title, size="5"),
+            rx.text(description),
+            align_items="center",
+            text_align="center",
+        ),
+        bg="rgba(244, 191, 12, 0.1)",
+        border="1px solid",
+        border_color=rx.color("yellow", shade=11),
+        border_radius="md",
+        padding="1em",
+        width="250px",
     )
 
 def navbar_link(text: str, url: str) -> rx.Component:
@@ -73,6 +121,14 @@ def navbar_link(text: str, url: str) -> rx.Component:
 
 def navbar() -> rx.Component:
     return rx.box(
+        rx.hstack(
+            # The logo.
+            rx.color_mode_cond(
+                rx.image(src="/swarm.png", height="3em", width="4em", radius="20px"),
+                rx.image(src="/swarm.png", height="3em", width="4em", radius="20px"),
+            ),
+
+        ),
         rx.desktop_only(
             rx.hstack(
                 rx.hstack(
@@ -118,7 +174,7 @@ def navbar() -> rx.Component:
                 align_items="center",
             ),
         ),
-        bg=rx.color("yellow", shade=11),
+        background_color="rgb(244, 191, 12)",
         padding="1em",
         width="100%",
     )
