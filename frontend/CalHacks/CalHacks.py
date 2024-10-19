@@ -128,12 +128,7 @@ def index():
             ),
             rx.divider(margin_y="2em"),
             rx.heading("How It Works", size="7", margin_bottom="1em"),
-            rx.ordered_list(
-                rx.list_item("Upload your design or provide a URL"),
-                rx.list_item("Our AI analyzes the user experience"),
-                rx.list_item("Receive a detailed report with suggestions"),
-                margin_left="2em",
-            ),
+            how_it_works_section(),
             rx.divider(margin_y="2em"),
             rx.heading("Get Started Today", size="7", margin_bottom="1em"),
             rx.link(
@@ -153,6 +148,46 @@ def index():
             padding_y="2em",
         ),
         rx.logo(),
+    )
+
+def how_it_works_section():
+    return rx.box(
+        rx.vstack(
+            rx.ordered_list(
+                rx.list_item(
+                    rx.text("Upload your design or provide a URL for instant analysis.", font_size="lg", color="gray.700")
+                ),
+                rx.list_item(
+                    rx.text("Our AI performs a comprehensive analysis of your UI/UX.", font_size="lg", color="gray.700")
+                ),
+                rx.list_item(
+                    rx.text("Receive actionable insights to enhance your product.", font_size="lg", color="gray.700")
+                ),
+                spacing="1em",
+                padding_left="1em",
+            ),
+            width="100%",
+            max_width="800px",
+            margin="0 auto",
+            padding="2em",
+        )
+    )
+
+def step_card(title: str, description: str, icon: str) -> rx.Component:
+    return rx.box(
+        rx.vstack(
+            rx.icon(icon, color="rgb(244, 191, 12)", size=30),
+            rx.heading(title, size="lg", color="rgb(244, 191, 12)", margin_top="1em"),
+            rx.text(description, color="gray.700", text_align="center", margin_top="0.5em"),
+            align_items="center",
+        ),
+        bg="rgba(244, 191, 12, 0.05)",
+        border_radius="lg",
+        padding="2em",
+        width="30%",
+        box_shadow="md",
+        _hover={"transform": "translateY(-5px)", "box_shadow": "lg"},
+        transition="all 0.3s ease-in-out",
     )
 
 def feature_card(title: str, description: str, icon: str) -> rx.Component:
