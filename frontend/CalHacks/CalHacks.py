@@ -1,6 +1,7 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
-
 import reflex as rx
+from pygments.styles.dracula import background
+
 
 class State(rx.State):
     """The app state."""
@@ -20,6 +21,11 @@ class State(rx.State):
     async def handle_submit(self, form_data: dict):
         """Handle the form submission."""
         self.url = form_data.get("url", "")
+
+    def clear_file(self):
+        """Clear the file content and name."""
+        self.file_content = ""
+        self.file_name = ""
 
 def index() -> rx.Component:
     # Welcome Page (Index)
@@ -119,16 +125,18 @@ def file_upload():
                     "Select File",
                     color="rgb(107,99,246)",
                     bg="white",
-                    border="1px solid rgb(107,99,246)",
+                    border="5px solid rgb(107,99,246)",
+                    align="center"
                 ),
                 rx.text(
                     "Drag and drop text file here or click to select"
                 ),
             ),
             id="readme",
-            border="1px dotted rgb(107,99,246)",
+            border="1px solid rgb(107,99,246)",
             padding="5em",
             accept={".txt": []},  # Only accept .txt files
+            align="center"
         ),
         rx.hstack(rx.foreach(rx.selected_files("readme"), rx.text)),
         rx.button(
@@ -137,7 +145,10 @@ def file_upload():
         ),
         rx.button(
             "Clear",
-            on_click=rx.clear_selected_files("readme"),
+            on_click=[
+                rx.clear_selected_files("readme"),
+                State.clear_file
+            ],
         ),
     )
 
@@ -181,7 +192,7 @@ def dashboard():
     return rx.box(
         navbar(),
         rx.divider(),
-        inputs(),
+        inputs()
     )
 
 def about():
