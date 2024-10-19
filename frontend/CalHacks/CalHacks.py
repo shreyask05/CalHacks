@@ -31,6 +31,7 @@ class State(rx.State):
 def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.container(
+        navbar(),
         #rx.color_mode.button(position="top-right"),
         rx.vstack(
             rx.heading("Welcome to Swarm,", size="9"),
