@@ -1,19 +1,27 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 import reflex as rx
-from reflex import color
+import asyncio
 
+import asyncio
 
 class State(rx.State):
     url: str = ""
     details: str = ""
+    is_loading: bool = False
 
     async def handle_submit(self, form_data: dict):
-        """Handle the form submission."""
         self.url = form_data.get("url", "")
         self.details = form_data.get("details", "")
+        self.is_loading = True
+        return rx.redirect("/loading")
+
+    async def finish_loading(self):
+        await asyncio.sleep(3)  # Wait for 3 seconds
+        self.is_loading = False  # Stop loading after waiting
+        print("redirecting")
+        return rx.redirect("/results")
 
     def clear_fields(self):
-        """Clear the input fields."""
         self.url = ""
         self.details = ""
 
@@ -176,7 +184,6 @@ def how_it_works_section():
         padding="2em"
     )
 
-
 def step_card(title: str, description: str, icon: str) -> rx.Component:
     return rx.box(
         rx.vstack(
@@ -252,7 +259,7 @@ def clear_button():
         "Clear",
         color="black",
         bg=rx.color("yellow", shade=11),
-        on_click=State.clear_fields,
+        on_click=State.clear_fields,  # Just clears the input fields
         padding="0.5em 2em",
         border_radius="md",
         _hover={"bg": "rgb(245,225,71)"},
@@ -274,7 +281,7 @@ def inputs():
                         border_radius="md",
                         _hover={"bg": "rgb(245,225,71)"},
                     ),
-                    clear_button(),  # Add the Clear button here
+                    clear_button(),
                     spacing="1em"
                 ),
                 align_items="center",
@@ -289,7 +296,7 @@ def inputs():
             padding="2em",
         ),
         rx.divider(),
-        rx.heading("Results", size="lg", margin_top='2em'),
+        rx.heading("Results", size="6", margin_top='2em'),
         rx.text("URL: " + State.url),
         rx.text("Details: " + State.details),
         align_items="center",
@@ -340,7 +347,7 @@ def about() -> rx.Component:
                     width="50%",
                 ),
                 rx.image(
-                    src="/mission_image.jpg",  # Replace with your actual image
+                    src="/aboutimage.jpg",  # Replace with your actual image
                     height="300px",
                     width="50%",
                     object_fit="cover",
@@ -417,8 +424,38 @@ def about() -> rx.Component:
         rx.logo(),
     )
 
+def loading_page() -> rx.Component:
+    return rx.box(
+        rx.vstack(
+            rx.spinner(size="3", color="rgb(244, 191, 12)"),
+            rx.text("Analyzing your UI, please wait...", font_size="2xl", margin_top="1em", color="rgb(244, 191, 12)"),
+            align_items="center",
+            justify_content="center",
+            min_height="85vh",
+        ),
+        background_color="black",
+    )
+
+def results_page() -> rx.Component:
+    return rx.box(
+        navbar(),
+        rx.vstack(
+            rx.heading("Analysis Results", size="9", margin_top="1em"),
+            rx.text("URL: " + State.url, font_size="xl", color="gray.700", margin_top="1em"),
+            rx.text("Details: " + State.details, font_size="xl", color="gray.700", margin_top="0.5em"),
+            align_items="center",
+            justify_content="center",
+            padding="2em",
+        ),
+        min_height="85vh",
+    )
+
 
 app = rx.App()
 app.add_page(index)
 app.add_page(dashboard)
 app.add_page(about)
+app.add_page(loading_page, route="/loading", on_load=State.finish_loading)
+app.add_page(results_page, route="/results")
+
+
