@@ -5,3 +5,4 @@ __pycache__/
 assets/external/
 frontend/.web
 frontend/assets/external/
+backend/distilroberta/
