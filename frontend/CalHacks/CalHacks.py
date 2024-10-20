@@ -38,12 +38,15 @@ def navbar() -> rx.Component:
     return rx.box(
         rx.hstack(
             rx.hstack(
-                rx.color_mode_cond(
-                    rx.image(src="/swarm.png", height="3em", width="4em", radius="20px"),
-                    rx.image(src="/swarm.png", height="3em", width="4em", radius="20px"),
+                rx.image(src="/swarm.png", height="6em", width="8em", radius="20px"),
+                rx.heading(
+                    "Swarm",
+                    size="8",
+                    weight="bold",
+                    color="black"
                 ),
-                rx.heading("Swarm", size="8", weight="bold", color="white"),
-                spacing="4",
+                spacing="0",
+                align="center"
             ),
             rx.spacer(),
             rx.desktop_only(
@@ -69,7 +72,7 @@ def navbar() -> rx.Component:
                             navbar_link("Dashboard", "/dashboard"),
                             bg="white",
                             color="black",
-                            _hover={"bg": "rgb(244, 191, 12)"}
+                            _hover={"transform": "scale(1.1)","bg": "rgb(244, 191, 12)"}
                         ),
                         rx.menu.item(
                             navbar_link("About", "/about"),
@@ -87,7 +90,6 @@ def navbar() -> rx.Component:
             align_items="center",
         ),
         background_color="rgb(244, 191, 12)",
-        padding="1em",
         width="100%",
     )
 
@@ -101,10 +103,16 @@ def index():
                 margin_top="1em"
             ),
             rx.text(
-                "Test your product's user experience with ease",
+                "Test your product's user experience with ", rx.text.strong("ease"),
                 size="5",
                 color="rgb(244, 191, 12)",
                 margin_bottom="1em",
+            ),
+            rx.button(
+                "Try Swarm Now",
+                color="black",
+                background_color="rgb(244, 191, 12)",
+                size="4",
             ),
             rx.divider(margin_y="1em"),
             rx.heading("Why Choose Swarm?", size="7", margin_bottom="1em"),
@@ -138,7 +146,7 @@ def index():
                     "Try Swarm Now",
                     color="black",
                     background_color="rgb(244, 191, 12)",
-                    size="10",
+                    size="4",
                 ),
                 href="/dashboard",
                 is_external=False,
@@ -156,20 +164,20 @@ def how_it_works_section():
     return rx.box(
         rx.vstack(
             rx.text(
-                "Upload your design or provide a URL for instant analysis.",
+                rx.text.strong("Upload"), " your design or provide a URL for instant analysis.",
                 size="5",
                 color="white",
                 align="center",
                 margin_bottom="10px"
             ),
-            rx.text("Our AI performs a comprehensive analysis of your UI/UX.",
+            rx.text("Our AI performs a ", rx.text.strong("comprehensive"), " analysis of your UI/UX.",
                 size="5",
                 color="white",
                 align="center",
                 margin_bottom="10px"
             ),
             rx.text(
-                "Receive actionable insights to enhance your product.",
+                "Receive actionable insights to ", rx.text.strong("enhance"), " your product.",
                 size="5",
                 color="white",
                 align="center"
@@ -330,10 +338,10 @@ def about() -> rx.Component:
         rx.vstack(
             rx.heading("About Swarm", size="9", margin_bottom="1em"),
             rx.text(
-                "Revolutionizing UI/UX Testing with AI",
+                rx.text.strong("Revolutionizing UI/UX Testing with AI"),
                 color="rgb(244, 191, 12)",
-                font_size="2xl",
-                margin_bottom="2em",
+                font_size="1.5em",
+                margin_bottom="1.5em",
             ),
             rx.flex(
                 rx.vstack(
@@ -363,15 +371,16 @@ def about() -> rx.Component:
                 wrap="wrap",
             ),
             rx.divider(),
-            rx.heading("Our Approach", size="7", margin_y="1em"),
+            rx.heading("Our Approach", size="7", margin_y="0em"),
             rx.hstack(
                 rx.vstack(
                     rx.icon("search", color="yellow", size=4),
                     rx.text("Analyze", font_weight="bold"),
                     rx.text("Deep dive into UI elements"),
                     padding="1em",
-                    bg="rgba(244, 191, 12, 0.1)",
+                    bg="rgba(244, 191, 12,0.1)",
                     border_radius="lg",
+                    _hover={"transform": "scale(1.05)", "color": "rgb(244, 191, 12)"}
                 ),
                 rx.vstack(
                     rx.icon("lightbulb", color="yellow", size=4),
@@ -380,6 +389,7 @@ def about() -> rx.Component:
                     padding="1em",
                     bg="rgba(244, 191, 12, 0.1)",
                     border_radius="lg",
+                    _hover={"transform": "scale(1.05)", "color": "rgb(244, 191, 12)"}
                 ),
                 rx.vstack(
                     rx.icon("repeat", color="yellow", size=4),
@@ -388,6 +398,7 @@ def about() -> rx.Component:
                     padding="1em",
                     bg="rgba(244, 191, 12, 0.1)",
                     border_radius="lg",
+                    _hover={"transform": "scale(1.05)", "color": "rgb(244, 191, 12)"}
                 ),
                 spacing="4",
                 margin_y="2em",
@@ -404,7 +415,8 @@ def about() -> rx.Component:
                     ),
                     rx.link(
                         rx.button("Documentation", variant="outline", color_scheme="yellow"),
-                        href="/docs",
+                        href="https://reflex.dev/docs/getting-started/introduction/",
+                        is_external=True
                     ),
                     spacing="4",
                 ),
