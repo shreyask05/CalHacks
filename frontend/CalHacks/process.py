@@ -1,16 +1,31 @@
-import selenium
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 
 
 def get_html(url, output_file):
+    print("url: " + url)
     options = Options()
     options.headless = True
-    driver = webdriver.Chrome(options=options)
-    driver.get(url)
-    page_source = driver.page_source
-    fileToWrite = open(output_file, "w")
-    fileToWrite.write(page_source)
-    fileToWrite.close()
 
-print("what the fuck")
+    # Ensure 'chromedriver' is accessible, or provide the path to it
+    driver = webdriver.Firefox(options=options)
+
+    # Load the web page
+    driver.get(url)
+    print("got url")
+    # Get the page source (HTML)
+    page_source = driver.page_source
+
+    # Save the HTML content to the file using a context manager
+    with open(output_file, "w") as file:
+        file.write(page_source)
+
+    # Close the browser session
+    driver.quit()
+
+    print("HTML successfully saved.")
+
+
+# Example usage:
+# get_html('https://example.com', 'output.html')
+
