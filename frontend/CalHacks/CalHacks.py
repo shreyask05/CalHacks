@@ -7,6 +7,7 @@ import asyncio
 import groq as Groq
 from reflex_text_loop import TextLoop
 from reflex_motion import motion
+import json
 
 
 class State(rx.State):
@@ -18,7 +19,7 @@ class State(rx.State):
         self.url = form_data.get("url", "")
         self.details = form_data.get("details", "")
         self.is_loading = True
-        get_html(self.url, "APP.html")
+        #get_html(self.url, "APP.html")
         return rx.redirect("/loading")
 
     async def finish_loading(self):
@@ -60,7 +61,7 @@ def navbar() -> rx.Component:
                     navbar_link("Home", "/"),
                     navbar_link("Dashboard", "/dashboard"),
                     navbar_link("About", "/about"),
-                    spacing="5",
+                    spacing="6",
                 ),
                 margin_right="4em"
             ),
@@ -345,18 +346,23 @@ def dashboard():
         inputs(),
     )
 
-def team_member(name: str, role: str, image: str) -> rx.Component:
-    return rx.vstack(
-        rx.avatar(name=name, size="7", src=image),
-        rx.text(name, font_weight="bold", color="black"),
-        rx.text(role, color="black"),
-        height="100%",
-        bg="white",
-        padding="1em",
-        border_radius="lg",
-        box_shadow="lg",
-        _hover={"transform": "scale(1.1)"},
-        transition="all 0.2s ease-in-out",
+def team_member(name: str, role: str, image: str, linkedin_url: str) -> rx.Component:
+    return rx.link(
+        rx.vstack(
+            rx.avatar(name=name, size="7", src=image),
+            rx.text(name, font_weight="bold", color="black"),
+            rx.text(role, color="black"),
+            height="100%",
+            bg="white",
+            padding="1em",
+            border_radius="lg",
+            box_shadow="lg",
+            _hover={"transform": "scale(1.1)"},
+            transition="all 0.2s ease-in-out",
+        ),
+        href=linkedin_url,
+        is_external=True,
+        _hover={"text_decoration": "none"},
     )
 
 def about() -> rx.Component:
@@ -365,10 +371,16 @@ def about() -> rx.Component:
         rx.vstack(
             rx.heading("About Swarm", size="9", margin_bottom="1em"),
             rx.text(
-                rx.text.strong("Revolutionizing UI/UX Testing with AI"),
+                "Revolutionizing UI/UX Testing with",
+                TextLoop(
+                    rx.text.strong("AI"),
+                    rx.text.strong("ML"),
+                    rx.text.strong("NLP"),
+                    rx.text.strong("LLM"),
+                ),
                 color="rgb(244, 191, 12)",
                 font_size="1.5em",
-                margin_bottom="1.5em",
+                margin_bottom="1.2em",
             ),
             rx.flex(
                 rx.vstack(
@@ -377,22 +389,22 @@ def about() -> rx.Component:
                         "At Swarm, we're on a mission to simplify and enhance UI/UX testing. "
                         "By leveraging cutting-edge AI technology, we provide instant, "
                         "accurate, and actionable insights to improve your product's user experience.",
-                        max_width="600px",
+                        max_width="600px", size="5"
                     ),
                     align_items="start",
                     width="50%",
                 ),
-                rx.image(src="/swarm.png", height="15em", width="20em", radius="20px"),
+                rx.image(src="/swarm.png", height="15em", width="20em", border_radius="20px"),
                 width="100%",
                 margin_bottom="3em",
             ),
             rx.divider(),
             rx.heading("Our Team", size="7", margin_y="1em"),
             rx.hstack(
-                team_member("Shreyas Konanki", "Founder & CEO", "/shreyas.png"),
-                team_member("Rohan Bopardikar", "CTO", "/rohan.png"),
-                team_member("Harshith Senthilkumaran", "Lead Designer", "/harshith.png"),
-                team_member("Darsh Verma", "AI Specialist", "/darsh.png"),
+                team_member("Shreyas Konanki", "Founder & CEO", "/shreyas.png", "https://www.linkedin.com/in/shreyas-konanki"),
+                team_member("Rohan Bopardikar", "CTO", "/rohan.png", "https://www.linkedin.com/in/rbopardi/"),
+                team_member("Harshith Senthilkumaran", "Lead Designer", "/harshith.png", "https://www.linkedin.com/in/harshith-senthilkumaran/"),
+                team_member("Darsh Verma", "AI Specialist", "/darsh.png", "https://www.linkedin.com/in/darshucla/"),
                 spacing="8",
                 justify="center",
                 wrap="wrap",
@@ -401,8 +413,10 @@ def about() -> rx.Component:
             rx.heading("Our Approach", size="7", margin_y="0em"),
             rx.hstack(
                 rx.vstack(
-                    rx.icon("search", color="yellow", size=4),
-                    rx.text("Analyze", font_weight="bold"),
+                    rx.hstack(
+                        rx.icon("search", color="yellow", size=20),
+                        rx.text("Analyze", font_weight="bold"),
+                    ),
                     rx.text("Deep dive into UI elements"),
                     padding="1em",
                     bg="rgba(244, 191, 12,0.1)",
@@ -410,8 +424,10 @@ def about() -> rx.Component:
                     _hover={"transform": "scale(1.05)", "color": "rgb(244, 191, 12)"}
                 ),
                 rx.vstack(
-                    rx.icon("lightbulb", color="yellow", size=4),
-                    rx.text("Innovate", font_weight="bold"),
+                    rx.hstack(
+                        rx.icon("lightbulb", color="yellow", size=20),
+                        rx.text("Innovate", font_weight="bold"),
+                    ),
                     rx.text("Generate creative solutions"),
                     padding="1em",
                     bg="rgba(244, 191, 12, 0.1)",
@@ -419,8 +435,10 @@ def about() -> rx.Component:
                     _hover={"transform": "scale(1.05)", "color": "rgb(244, 191, 12)"}
                 ),
                 rx.vstack(
-                    rx.icon("repeat", color="yellow", size=4),
-                    rx.text("Iterate", font_weight="bold"),
+                    rx.hstack(
+                        rx.icon("repeat", color="yellow", size=20),
+                        rx.text("Iterate", font_weight="bold"),
+                    ),
                     rx.text("Continuous improvement"),
                     padding="1em",
                     bg="rgba(244, 191, 12, 0.1)",
@@ -468,22 +486,150 @@ def loading_page() -> rx.Component:
             min_height="85vh",
         ),
         background_color="black",
+
+    )
+
+class AgentState(rx.State):
+    feedback_modal: dict[str, bool] = {}
+
+    def toggle_feedback(self, agent_name: str):
+        for name in self.feedback_modal:
+            self.feedback_modal[name] = False
+        self.feedback_modal[agent_name] = not self.feedback_modal.get(agent_name, False)
+
+def agent_card(name: str, description: str, feedback: str) -> rx.Component:
+    return rx.vstack(
+        rx.icon("user", color="rgb(244, 191, 12)", size=35),
+        rx.text(name, font_weight="bold", color="rgb(244, 191, 12)"),
+        rx.text(description, color="white", text_align="center"),
+        rx.popover.root(
+            rx.popover.trigger(
+                rx.button(
+                    "Show Feedback",
+                    color="black",
+                    bg="rgb(244, 191, 12)",
+                    _hover={"bg": "rgba(244, 191, 12, 0.8)"}
+                )
+            ),
+            rx.popover.content(
+                rx.flex(
+                    rx.heading(f"Feedback from {name}", size="lg", color="rgb(244, 191, 12)"),
+                    rx.text(feedback, color="white"),
+                    rx.popover.close(
+                        rx.button(
+                            "Close",
+                            color="black",
+                            bg="rgb(244, 191, 12)",
+                            _hover={"bg": "rgba(244, 191, 12, 0.8)"}
+                        )
+                    ),
+                    direction="column",
+                    spacing="3",
+                    bg="black",
+                    border="1px solid rgb(244, 191, 12)",
+                    padding="1em",
+                    max_width="300px",
+                )
+            )
+        ),
+        bg="rgba(244, 191, 12, 0.2)",
+        border="1px solid rgb(244, 191, 12)",
+        border_radius="lg",
+        padding="1em",
+        width="200px",
+        height="200px",
+        _hover={"transform": "scale(1.05)", "bg": "rgba(244, 191, 12, 0.3)"},
+        transition="all 0.2s ease-in-out",
+    )
+
+def log_card(key: str, value: str) -> rx.Component:
+    return rx.popover.root(
+        rx.popover.trigger(
+            rx.box(
+                rx.text(key, color="white", font_weight="bold"),
+                bg="rgba(244, 191, 12, 0.1)",
+                border="1px solid rgb(244, 191, 12)",
+                border_radius="lg",
+                padding="1em",
+                margin_bottom="0.5em",
+                cursor="pointer",
+                _hover={"bg": "rgba(244, 191, 12, 0.2)"},
+            )
+        ),
+        rx.popover.content(
+            rx.flex(
+                rx.text(f"Log: {key}", font_weight="bold"),
+                rx.text(value),
+                rx.popover.close(
+                    rx.button("Close", color="black", bg="rgb(244, 191, 12)")
+                ),
+                direction="column",
+                spacing="3",
+                bg="black",
+                border="1px solid rgb(244, 191, 12)",
+                padding="1em",
+                max_width="300px",
+            )
+        )
     )
 
 def results_page() -> rx.Component:
     return rx.box(
         navbar(),
         rx.vstack(
-            rx.heading("Analysis Results", size="9", margin_top="1em"),
-            rx.text("URL: " + State.url, font_size="xl", color="gray.700", margin_top="1em"),
-            rx.text("Details: " + State.details, font_size="xl", color="gray.700", margin_top="0.5em"),
-            align_items="center",
-            justify_content="center",
+            rx.heading("Analysis Results", size="9", margin_top="1em", margin_bottom="0.5em", color="white"),
+            rx.box(
+                rx.text("URL: " + State.url, color="white"),
+                rx.text("Details: " + State.details, color="white"),
+                margin_top="0em",
+                margin_bottom="2em",
+                padding="1em",
+                border_radius="md",
+                width="100%",
+            ),
+            rx.tabs.root(
+                rx.tabs.list(
+                    rx.tabs.trigger("First Impression", value="first_impression", color="black"),
+                    rx.tabs.trigger("Swarm Test", value="swarm_test", color="black"),
+                    background_color="rgb(244, 191, 12)",
+                ),
+                rx.tabs.content(
+                    rx.flex(
+                        agent_card("Bonnie", "UI/UX Specialist", "The website has a clean and modern design. The layout is intuitive, but there's room for improvement in the mobile responsiveness."),
+                        agent_card("William", "Color Theory Expert", "The color scheme is cohesive and aligns well with the brand. Consider adding more contrast for better readability in some sections."),
+                        agent_card("Brian", "Usability Tester", "Navigation is straightforward, but some interactive elements could benefit from clearer visual cues for better user engagement."),
+                        agent_card("Kylie", "Accessibility Analyst", "Overall accessibility is good, but there are opportunities to enhance screen reader compatibility and keyboard navigation."),
+                        spacing="4",
+                        justify="center",
+                        wrap="wrap",
+                        margin_top="1em"
+                    ),
+                    value="first_impression",
+                ),
+                rx.tabs.content(
+                    rx.vstack(
+                        log_card("key1", "Increasing impression interested expression he my at. Respect invited request charmed me warrant to. Expect no pretty as do though so genius afraid cousin. Girl when of ye snug poor draw. Mistake totally of in chiefly. Justice visitor him entered for. Continue delicate as unlocked entirely mr relation diverted in. Known not end fully being style house. An whom down kept lain name so at easy."),
+                        log_card("key2", "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its."),
+                        log_card("key3", "New the her nor case that lady paid read. Invitation friendship travelling eat everything the out two. Shy you who scarcely expenses debating hastened resolved. Always polite moment on is warmth spirit it to hearts. Downs those still witty an balls so chief so. Moment an little remain no up lively no. Way brought may off our regular country towards adapted cheered."),
+                        log_card("key4", "Although moreover mistaken kindness me feelings do be marianne. Son over own nay with tell they cold upon are. Cordial village and settled she ability law herself. Finished why bringing but sir bachelor unpacked any thoughts. Unpleasing unsatiable particular inquietude did nor sir. Get his declared appetite distance his together now families. Friends am himself at on norland it viewing. Suspected elsewhere you belonging continued commanded she."),
+                        log_card("key5", "Those an equal point no years do. Depend warmth fat but her but played. Shy and subjects wondered trifling pleasant. Prudent cordial comfort do no on colonel as assured chicken. Smart mrs day which begin. Snug do sold mr it if such. Terminated uncommonly at at estimating. Man behaviour met moonlight extremity acuteness direction."),
+                        width="100%",
+                        align_items="stretch",
+                        margin_top="1em",
+                    ),
+                    value="swarm_test",
+                ),
+                width="100%",
+            ),
+            align_items="stretch",
+            width="100%",
+            max_width="1200px",
+            margin="0 auto",
             padding="2em",
         ),
-        min_height="85vh",
+        background_color="black",
+        min_height="100vh",
     )
-
 
 app = rx.App()
 app.add_page(index)
