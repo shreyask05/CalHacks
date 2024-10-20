@@ -1,8 +1,10 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 import reflex as rx
 import asyncio
-
+from CalHacks.main import UXENGINE
+from CalHacks.process import get_html 
 import asyncio
+import groq as Groq
 
 class State(rx.State):
     url: str = ""
@@ -13,6 +15,8 @@ class State(rx.State):
         self.url = form_data.get("url", "")
         self.details = form_data.get("details", "")
         self.is_loading = True
+        f = open("APP.html", "a")
+        get_html(self.url, f)
         return rx.redirect("/loading")
 
     async def finish_loading(self):
