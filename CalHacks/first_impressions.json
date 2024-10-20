@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Jake",
+        "summary": "Jake is a 24-year-old tech genius who is highly knowledgeable about computers and programming",
+        "feedback": "Overall, the website feels dated and a bit clunky. The design is fine, but it lacks a modern aesthetic. The popup is intrusive, and the way it's positioned on the right side of the screen makes it difficult to read the main content. While I appreciate the information about donating to Wikipedia, the popup doesn't feel like a subtle request and instead comes off as pushy.  The \"Read Wikipedia\" button is also a bit generic. I'd expect a more engaging call to action, especially on a website with so much information. It's good they are trying to make the site multilingual, but the layout of the languages is a little strange and makes the page feel cluttered. \n"
+    },
+    {
+        "name": "Alex",
+        "summary": "Alex is a 21-year-old non-STEM college student majoring in the humanities",
+        "feedback": "This website is okay, but it doesn't really feel like it's designed with me in mind.  The big, bright green box with all the text about donating is a bit overwhelming. It\u2019s like it\u2019s screaming at me to donate money, which I\u2019m not really interested in right now. Also, I don\u2019t see any easy way to share content on social media, which is something I always look for.  The design is pretty basic, which is good, but it's also a bit boring. I wish it was a bit more visually engaging.  And the \u201cRead Wikipedia\u201d button is a bit too small and doesn't stand out.  Overall, it\u2019s a decent website, but I feel like I'm not really connected to it or able to share the content I find here with my friends. \n"
+    },
+    {
+        "name": "Bonnie",
+        "summary": "Bonnie is a 70-year-old grandmother who isn't very tech-savvy",
+        "feedback": "Oh my, this website is a bit much for me! I love that there are all these different languages, but those fancy pictures and words like \"articles\" and \"encyclopedia\" just make my head spin. I'd much prefer a simpler design, something like a big, easy-to-read button that says \"Recipes\" or something like that. And that pop-up box! All those words about money and AI are just confusing. I want something clear and straightforward like \"Help support us\" with a picture of a dollar bill next to it. Maybe a little video showing how to give money. But it's good that they have the \"Read Wikipedia\" button - that's something I could understand! \n"
+    },
+    {
+        "name": "Joe",
+        "summary": "Joe is a 45-year-old average middle-aged guy who is practical and straightforward in his approach to technology",
+        "feedback": "Well, this website is kinda busy, with a lot of stuff going on. I like that it's clear what language I'm looking at, and I appreciate seeing the number of articles they have. But honestly, this pop-up asking for money right when I land on the site is a little off-putting. It's a bit pushy, and I'd rather just explore the site first before being asked to donate. The design itself isn't bad, but it's not exactly what I'd call user-friendly. It feels like a lot of information is thrown at me at once, and I'm not sure where to start. I'm guessing it's a good site based on the content, but it feels a bit overwhelming. If it offered simpler navigation and maybe a clear way to find what I'm looking for, that would be great. \n"
+    }
+]

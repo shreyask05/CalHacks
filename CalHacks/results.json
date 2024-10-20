@@ -1,0 +1,14 @@
+[
+    {
+        "case": "\"Search for a topic\"",
+        "result": "True"
+    },
+    {
+        "case": " \"Explore related articles\"",
+        "result": "True"
+    },
+    {
+        "case": " \"Contribute to the encyclopedia\"",
+        "result": "False"
+    }
+]

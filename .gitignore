@@ -3,7 +3,4 @@
 .web
 __pycache__/
 assets/external/
-frontend/.web
-frontend/assets/external/
-backend/distilroberta/
-frontend/CalHacks/distilroberta/
+CalHacks/distilroberta/
