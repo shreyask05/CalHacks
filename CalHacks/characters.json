@@ -1,0 +1,20 @@
+{
+    "characters": [
+        {
+            "name": "Bonnie",
+            "description": "Bonnie is a 70-year-old grandmother who isn't very tech-savvy. She grew up long before smartphones and the internet became a regular part of daily life, so her interactions with technology are limited to the basics. Bonnie uses her desktop computer mainly for video calls with her family, checking emails, and looking up simple recipes online. She's cautious and slow when navigating websites and apps, often getting confused by unfamiliar interfaces or features. Bonnie prefers larger text sizes, straightforward language, and clear buttons. Anything with too many options or distractions frustrates her. She needs websites that are user-friendly, with step-by-step guides and visual cues to help her understand where to go next."
+        },
+        {
+            "name": "Alex",
+            "description": "Alex is a 21-year-old non-STEM college student majoring in the humanities. They are passionate about social justice, the environment, and current events. Technology is a tool Alex uses for communication, research, and creativity, but they aren't deeply interested in learning the technical aspects behind it. They expect websites to be simple, clean, and easy to use, especially on mobile devices. Alex values fast, informational websites that are free from distractions, with clear navigation and accessible content. They are also interested in social media integration and prefer sites that allow them to easily share content. They dislike websites that feel overly complicated or slow."
+        },
+        {
+            "name": "Jake",
+            "description": "Jake is a 24-year-old tech genius who is highly knowledgeable about computers and programming. He's passionate about new technology and enjoys exploring innovative designs and features. Jake expects websites to be fast, well-optimized, and responsive. He values clean code, developer-friendly features, and cutting-edge functionality. He enjoys websites that offer customization options, advanced features for power users, and seamless multi-platform compatibility. Jake is also highly aware of privacy and security, expecting websites to follow best practices. Websites that are poorly designed, slow, or lack modern tech integrations lose Jake's interest quickly."
+        },
+        {
+            "name": "Joe",
+            "description": "Joe is a 45-year-old average middle-aged guy who is practical and straightforward in his approach to technology. He uses it mainly to accomplish tasks like paying bills, shopping, or checking emails. Joe prefers websites that are simple, functional, and easy to navigate. He's not interested in flashy designs or constant UI changes, and he values consistency. Joe appreciates sites that offer customer service options and straightforward privacy settings. He uses his phone for casual browsing but expects sites to be optimized for mobile. He is cautious about sharing personal information and prefers websites with clear security practices."
+        }
+    ]
+}

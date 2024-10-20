@@ -1,0 +1,14 @@
+[
+    {
+        "case": "\"View Cricket Scores\"",
+        "result": "False"
+    },
+    {
+        "case": " \"Get Live Updates\"",
+        "result": "True"
+    },
+    {
+        "case": " \"Join a Fantasy League\"",
+        "result": "False"
+    }
+]
