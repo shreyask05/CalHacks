@@ -17,7 +17,7 @@ def get_html(url, output_file):
     page_source = driver.page_source
 
     # Save the HTML content to the file using a context manager
-    with open(output_file, "w") as file:
+    with open(output_file, "w", encoding="utf-8") as file:
         file.write(page_source)
 
     # Close the browser session
