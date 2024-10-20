@@ -6,16 +6,16 @@ from pydantic import BaseModel, ValidationError
 
 
 class Action(BaseModel):
-    name: str 
+    action_name: str
     description: str
 
 class ActionList(BaseModel):
     webapp: str
     actions: list[Action]    
 
-context_path = "./CalHacks/fixtures/page_source.html"
-with open(context_path, 'r', encoding='utf-8', errors='replace') as file:
-    html_string = file.read()
+# context_path = "APP.html"
+# with open(context_path, 'r', encoding='utf-8', errors='replace') as file:
+#     html_string = file.read()
 
 def split_text(text: str, max_length: int) -> list[str]:
     """Splits the input text into chunks of specified maximum length."""
@@ -42,21 +42,24 @@ def split_text(text: str, max_length: int) -> list[str]:
     return chunks
 
 # Split the context into smaller parts to avoid exceeding the input length
-chunked_context = split_text(html_string, 5000)  # Adjust the max_length based on your API's limits
+#chunked_context = split_text(html_string, 5000)  # Adjust the max_length based on your API's limits
 
 client = Groq(
     api_key="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",
 )
-def get_actionlist(webapp: str) -> ActionList:
+def get_actionlist(chunked_context) -> ActionList:
+    if os.path.exists('log.json'):
+        os.remove('log.json')
     f = open("log.json", "a")
     # Loop through each chunk of the context
     for chunk in chunked_context:
+        
         chat_completion = client.chat.completions.create(
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an Action List database that outputs Action Lists in JSON. Action Lists are composed of all possible actions a user might complete on the website for its intended use. Actions are strictly goal-oriented, succinct, and relating to the user's experience. Actions must start with 'Users can'\n"
-                    f"The JSON object must use the schema: {json.dumps(Action.model_json_schema(), indent=2)}",
+                    "content": "You are an Action List database that outputs Action Lists in JSON. Action Lists are composed of 3 actions a user would perform on the website. Actions are strictly goal-oriented, succinct, and relating to the user's experience. Each Action must be separated by a comma. Output absolutely nothing else except the list of actions.",
+                    # f"The JSON object must use the schema: {json.dumps(ActionList.model_json_schema(), indent=2)}",
                 },
                 {
                     "role": "user",
@@ -65,14 +68,22 @@ def get_actionlist(webapp: str) -> ActionList:
             model="llama3-8b-8192",
             temperature=0, 
             stream=False,
-            response_format= {"type": "json_object"},
+            # response_format= {"type": "json_object"},
         )
 
-        f.write(chat_completion.choices[0].message.content)
+        result = {}
+        result['items'] = []
+        for item in chat_completion.choices[0].message.content[1 : -1].split(','):
+            result['items'].append({
+                "description" : item,
+            })
+        json.dump(result, f, indent=4)
+        # f.write(str(result))
         f.close()
 
+        return
         # Validate and return the Action List for this chunk
-        return ActionList.model_validate_json(chat_completion.choices[0].message.content)
+        # return ActionList.model_validate_json(chat_completion.choices[0].message.content)
 
 def print_ActionList(actionlist: ActionList):
     print("Action List", actionlist.webapp)

@@ -22,7 +22,7 @@ class State(rx.State):
         return rx.redirect("/loading")
 
     async def finish_loading(self):
-        await asyncio.sleep(3)  # Wait for 3 seconds
+        await asyncio.sleep(300)  # Wait for 3 seconds
         self.is_loading = False  # Stop loading after waiting
         print("redirecting")
         return rx.redirect("/results")

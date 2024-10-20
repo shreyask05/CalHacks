@@ -7,12 +7,16 @@ from lavague.core.agents import WebAgent
 from lavague.drivers.selenium import SeleniumDriver
 from lavague.contexts.gemini import GeminiContext
 import json
+import os
 from dotenv import load_dotenv, find_dotenv
+import concurrent.futures
+import time
 
-def UXENGINE():
+def UXENGINE(url):
+    print("we made it to groq")
     load_dotenv(find_dotenv())
 
-    context_path = "./fixtures/page_source.html"
+    context_path = "APP.html"
 
     # Read the HTML file
     with open(context_path, 'r', encoding='utf-8', errors='replace') as file:
@@ -24,8 +28,7 @@ def UXENGINE():
 
     # Get and print the Action List
     try:
-        webapp = get_actionlist("some-webapp-name")  # Ensure correct argument
-        print_ActionList(webapp)
+        get_actionlist(chunked_context)  # Ensure correct argument
     except ValidationError as e:
         print(f"ValidationError: {e}")
 
@@ -43,6 +46,22 @@ def UXENGINE():
 
     with open('log.json') as f:
         groq_output_json = json.load(f)
-    agent.get("https://my.ucla.edu/")
+    agent.get(url)
+    
+    def run_agent(description):
+        agent.run(description)
+    
     for item in groq_output_json['items']:
+        print("---------------SWARM ACTIVATED--------------------------\n")
         agent.run(item["description"])
+
+    # for item in groq_output_json['items']:
+    #     description = item["description"]
+    #     with concurrent.futures.ThreadPoolExecutor() as executor:
+    #         future = executor.submit(run_agent, description)
+    #         try:
+    #             # Wait for agent.run to finish, with a timeout of 20 seconds
+    #             future.result(timeout=10)
+    #         except concurrent.futures.TimeoutError:
+    #             print(f"Skipping item due to timeout: {description}")
+

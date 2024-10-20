@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from CalHacks.main import UXENGINE
 
 
 def get_html(url, output_file):
@@ -24,6 +25,8 @@ def get_html(url, output_file):
     driver.quit()
 
     print("HTML successfully saved.")
+        
+    UXENGINE(url)
 
 
 # Example usage:
