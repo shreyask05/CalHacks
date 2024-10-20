@@ -4,11 +4,10 @@ import asyncio
 from CalHacks.main import UXENGINE
 from CalHacks.process import get_html 
 import asyncio
-<<<<<<< HEAD
-=======
 import groq as Groq
 from reflex_text_loop import TextLoop
->>>>>>> 6f5701e0c898632bed4c3b51b3c506330e5511ea
+from reflex_motion import motion
+
 
 class State(rx.State):
     url: str = ""
