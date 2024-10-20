@@ -103,19 +103,32 @@ def index():
     return rx.box(
         navbar(),
         rx.vstack(
-            rx.heading(
-                rx.text(TextLoop("Welcome", "To", "Swarm", animation="just")),
-                size="9",
-                margin_top="0.8em",
-                align="center",
-                margin_right="4.5em"
+            motion(
+                rx.heading(
+                    "Welcome to Swarm",
+                    size="9",
+                    margin_top="0.8em",
+                    align="center",
+                ),
+                while_hover={"scale": 1.2},
+                while_tap={"scale": 0.9},
+                transition={"type": "spring", "stiffness": 400, "damping": 17},
             ),
+
             rx.text(
-                "Test your product's user experience with ", rx.text.strong("ease"),
-                margin_top="3em",
+                "Test your product's user experience with ",
+                TextLoop(
+                    rx.text.strong("ease"),
+                    rx.text.strong("efficiency"),
+                    rx.text.strong("speed"),
+                    rx.text.strong("clarity"),
+                    rx.text.strong("consistency"),
+                ),
+                margin_top="1em",
                 size="5",
                 color="rgb(244, 191, 12)",
                 margin_bottom="1em",
+                margin_right="3em",
             ),
             rx.link(
                 rx.button(
