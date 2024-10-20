@@ -1,13 +1,13 @@
 {
     "items": [
         {
-            "description": "\"View Cricket Scores\""
+            "description": "\"Search for a topic\""
         },
         {
-            "description": " \"Get Live Updates\""
+            "description": " \"Explore related articles\""
         },
         {
-            "description": " \"Join a Fantasy League\""
+            "description": " \"Contribute to the encyclopedia\""
         }
     ]
 }

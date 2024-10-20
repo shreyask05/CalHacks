@@ -1,6 +1,7 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 import reflex as rx
 import asyncio
+
 from CalHacks.main import UXENGINE
 from CalHacks.process import get_html 
 import asyncio
@@ -9,20 +10,52 @@ from reflex_text_loop import TextLoop
 from reflex_motion import motion
 import json
 
+class impressionState(rx.State):
+    data: list = []
+
+    def load_data(self):
+        with open("./CalHacks/first_impressions.json") as file:
+            self.data = json.load(file)
+            
+class swarmState(rx.State):
+    swarm_data: list = []
+    
+    def load_swarm_data():
+        with open("./CalHacks/results.json", "r") as file:
+            swarm_data = json.load(file)
+
+class charState(rx.State):
+    data: list = []
+
+    def load_data(self):
+        with open("./CalHacks/characters.json") as file:
+            self.data = json.load(file)
+
+
 class State(rx.State):
     url: str = ""
     details: str = ""
     is_loading: bool = False
+    
 
     async def handle_submit(self, form_data: dict):
         self.url = form_data.get("url", "")
         self.details = form_data.get("details", "")
-        self.is_loading = True
         get_html(self.url, "APP.html")
+        
+        
+        
+        
+        self.is_loading = True
+<<<<<<< Updated upstream
+        get_html(self.url, "APP.html")
+=======
+
+>>>>>>> Stashed changes
         return rx.redirect("/loading")
 
     async def finish_loading(self):
-        await asyncio.sleep(300)  # Wait for 3 seconds
+        await asyncio.sleep(3)  # Wait for 3 seconds
         self.is_loading = False  # Stop loading after waiting
         print("redirecting")
         return rx.redirect("/results")
@@ -572,7 +605,35 @@ def log_card(key: str, value: str) -> rx.Component:
         )
     )
 
+def swarm_results() -> rx.Component:
+    f = open("./CalHacks/results.json")
+    data = json.load(f)
+    f.close()
+    return rx.table.body(
+        rx.foreach(
+            data,
+            lambda row: rx.table.row(
+                rx.table.cell(row["case"], color="white"),
+                rx.table.cell(row["result"], color="white"),
+            ),
+        )
+    )
+    
+def first_impression_results() -> rx.Component:
+    f = open("./CalHacks/first_impressions.json")
+    data = json.load(f)
+    f.close()
+    return rx.foreach(
+        data,
+        lambda row: rx.table.row(
+            agent_card(row["name"], row["summary"], row["feedback"])
+        ),
+    )
+
 def results_page() -> rx.Component:
+    
+    with open('log.json', 'r') as json_file:
+        data = json.load(json_file)
     return rx.box(
         navbar(),
         rx.vstack(
@@ -585,14 +646,15 @@ def results_page() -> rx.Component:
                 ),
                 rx.tabs.content(
                     rx.flex(
-                        agent_card("Bonnie", "UI/UX Specialist", "The website has a clean and modern design. The layout is intuitive, but there's room for improvement in the mobile responsiveness."),
-                        agent_card("William", "Color Theory Expert", "The color scheme is cohesive and aligns well with the brand. Consider adding more contrast for better readability in some sections."),
-                        agent_card("Brian", "Usability Tester", "Navigation is straightforward, but some interactive elements could benefit from clearer visual cues for better user engagement."),
-                        agent_card("Kylie", "Accessibility Analyst", "Overall accessibility is good, but there are opportunities to enhance screen reader compatibility and keyboard navigation."),
+                        # agent_card("Bonnie", "UI/UX Specialist", "The website has a clean and modern design. The layout is intuitive, but there's room for improvement in the mobile responsiveness."),
+                        # agent_card("William", "Color Theory Expert", "The color scheme is cohesive and aligns well with the brand. Consider adding more contrast for better readability in some sections."),
+                        # agent_card("Brian", "Usability Tester", "Navigation is straightforward, but some interactive elements could benefit from clearer visual cues for better user engagement."),
+                        # agent_card("Kylie", "Accessibility Analyst", "Overall accessibility is good, but there are opportunities to enhance screen reader compatibility and keyboard navigation."),
+                        first_impression_results(),
                         spacing="4",
                         justify="center",
                         wrap="wrap",
-                        margin_top="1em"
+                        margin_top="10em"
                     ),
                     value="first_impression",
                 ),
@@ -600,32 +662,12 @@ def results_page() -> rx.Component:
                     rx.table.root(
                         rx.table.header(
                             rx.table.row(
-                                rx.table.column_header_cell("Agent Objective", color="rgb(244, 191, 12)", font_weight="bold"),
-                                rx.table.column_header_cell("Runtime", color="rgb(244, 191, 12)", font_weight="bold"),
-                                rx.table.column_header_cell("Success", color="rgb(244, 191, 12)", font_weight="bold"),
+                                rx.table.column_header_cell("Case", color="rgb(244, 191, 12)", font_weight="bold"),
+                                rx.table.column_header_cell("Result", color="rgb(244, 191, 12)", font_weight="bold"),
                             ),
                             background_color="black",
                         ),
-                        rx.table.body(
-                            rx.table.row(
-                                rx.table.cell("Complete task A", color="white"),
-                                rx.table.cell("30", color="white"),
-                                rx.table.cell(rx.icon(tag="circle-check", color="green")),
-                                _hover={"background_color": "rgba(255, 255, 255, 0.1)"},
-                            ),
-                            rx.table.row(
-                                rx.table.cell("Finish project B", color="white"),
-                                rx.table.cell("45", color="white"),
-                                rx.table.cell(rx.icon(tag="circle-x", color="red")),
-                                _hover={"background_color": "rgba(255, 255, 255, 0.1)"},
-                            ),
-                            rx.table.row(
-                                rx.table.cell("Review document C", color="white"),
-                                rx.table.cell("15", color="white"),
-                                rx.table.cell(rx.icon(tag="circle-check", color="green")),
-                                _hover={"background_color": "rgba(255, 255, 255, 0.1)"},
-                            ),
-                        ),
+                        swarm_results(),
                         width="100%",
                         border="1px solid rgba(255, 255, 255, 0.2)",
                         border_radius="md",

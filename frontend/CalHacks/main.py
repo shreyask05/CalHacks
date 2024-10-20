@@ -51,9 +51,22 @@ def UXENGINE(url):
     def run_agent(description):
         agent.run(description)
     
+    print("---------------SWARM ACTIVATED--------------------------\n")
+    result = []
     for item in groq_output_json['items']:
-        print("---------------SWARM ACTIVATED--------------------------\n")
+        if os.path.exists('temp.log'):
+            os.remove('temp.log')
         agent.run(item["description"])
+        with open('temp.log', 'r') as file:
+            result.append({
+                "case" : item["description"],
+                "result" : file.read().strip()
+            })
+    f = open("./CalHacks/results.json", "a")
+    json.dump(result, f, indent=4)
+    print(result)
+    return
+    
 
     # for item in groq_output_json['items']:
     #     description = item["description"]
