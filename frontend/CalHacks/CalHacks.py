@@ -578,15 +578,6 @@ def results_page() -> rx.Component:
         navbar(),
         rx.vstack(
             rx.heading("Analysis Results", size="9", margin_top="1em", margin_bottom="0.5em", color="white"),
-            rx.box(
-                rx.text("URL: " + State.url, color="white"),
-                rx.text("Details: " + State.details, color="white"),
-                margin_top="0em",
-                margin_bottom="2em",
-                padding="1em",
-                border_radius="md",
-                width="100%",
-            ),
             rx.tabs.root(
                 rx.tabs.list(
                     rx.tabs.trigger("First Impression", value="first_impression", color="black"),
@@ -607,15 +598,39 @@ def results_page() -> rx.Component:
                     value="first_impression",
                 ),
                 rx.tabs.content(
-                    rx.vstack(
-                        log_card("key1", "Increasing impression interested expression he my at. Respect invited request charmed me warrant to. Expect no pretty as do though so genius afraid cousin. Girl when of ye snug poor draw. Mistake totally of in chiefly. Justice visitor him entered for. Continue delicate as unlocked entirely mr relation diverted in. Known not end fully being style house. An whom down kept lain name so at easy."),
-                        log_card("key2", "An so vulgar to on points wanted. Not rapturous resolving continued household northward gay. He it otherwise supported instantly. Unfeeling agreeable suffering it on smallness newspaper be. So come must time no as. Do on unpleasing possession as of unreserved. Yet joy exquisite put sometimes enjoyment perpetual now. Behind lovers eat having length horses vanity say had its."),
-                        log_card("key3", "New the her nor case that lady paid read. Invitation friendship travelling eat everything the out two. Shy you who scarcely expenses debating hastened resolved. Always polite moment on is warmth spirit it to hearts. Downs those still witty an balls so chief so. Moment an little remain no up lively no. Way brought may off our regular country towards adapted cheered."),
-                        log_card("key4", "Although moreover mistaken kindness me feelings do be marianne. Son over own nay with tell they cold upon are. Cordial village and settled she ability law herself. Finished why bringing but sir bachelor unpacked any thoughts. Unpleasing unsatiable particular inquietude did nor sir. Get his declared appetite distance his together now families. Friends am himself at on norland it viewing. Suspected elsewhere you belonging continued commanded she."),
-                        log_card("key5", "Those an equal point no years do. Depend warmth fat but her but played. Shy and subjects wondered trifling pleasant. Prudent cordial comfort do no on colonel as assured chicken. Smart mrs day which begin. Snug do sold mr it if such. Terminated uncommonly at at estimating. Man behaviour met moonlight extremity acuteness direction."),
+                    rx.table.root(
+                        rx.table.header(
+                            rx.table.row(
+                                rx.table.column_header_cell("Agent Objective", color="rgb(244, 191, 12)", font_weight="bold"),
+                                rx.table.column_header_cell("Runtime", color="rgb(244, 191, 12)", font_weight="bold"),
+                                rx.table.column_header_cell("Success", color="rgb(244, 191, 12)", font_weight="bold"),
+                            ),
+                            background_color="black",
+                        ),
+                        rx.table.body(
+                            rx.table.row(
+                                rx.table.cell("Complete task A", color="white"),
+                                rx.table.cell("30", color="white"),
+                                rx.table.cell(rx.icon(tag="circle-check", color="green")),
+                                _hover={"background_color": "rgba(255, 255, 255, 0.1)"},
+                            ),
+                            rx.table.row(
+                                rx.table.cell("Finish project B", color="white"),
+                                rx.table.cell("45", color="white"),
+                                rx.table.cell(rx.icon(tag="circle-x", color="red")),
+                                _hover={"background_color": "rgba(255, 255, 255, 0.1)"},
+                            ),
+                            rx.table.row(
+                                rx.table.cell("Review document C", color="white"),
+                                rx.table.cell("15", color="white"),
+                                rx.table.cell(rx.icon(tag="circle-check", color="green")),
+                                _hover={"background_color": "rgba(255, 255, 255, 0.1)"},
+                            ),
+                        ),
                         width="100%",
-                        align_items="stretch",
-                        margin_top="1em",
+                        border="1px solid rgba(255, 255, 255, 0.2)",
+                        border_radius="md",
+                        overflow="hidden",
                     ),
                     value="swarm_test",
                 ),
@@ -639,3 +654,15 @@ app.add_page(loading_page, route="/loading", on_load=State.finish_loading)
 app.add_page(results_page, route="/results")
 
 
+'''
+this is how you show the info in the results page if needed for testing
+rx.box(
+                rx.text("URL: " + State.url, color="white"),
+                rx.text("Details: " + State.details, color="white"),
+                margin_top="0em",
+                margin_bottom="2em",
+                padding="1em",
+                border_radius="md",
+                width="100%",
+            )
+'''
