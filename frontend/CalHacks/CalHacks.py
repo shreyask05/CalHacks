@@ -18,7 +18,7 @@ class State(rx.State):
         self.url = form_data.get("url", "")
         self.details = form_data.get("details", "")
         self.is_loading = True
-        #get_html(self.url, "APP.html")
+        get_html(self.url, "APP.html")
         return rx.redirect("/loading")
 
     async def finish_loading(self):
@@ -354,7 +354,7 @@ def team_member(name: str, role: str, image: str, linkedin_url: str) -> rx.Compo
             height="100%",
             bg="white",
             padding="1em",
-            border_radius="lg",
+            border_radius="10px",
             box_shadow="lg",
             _hover={"transform": "scale(1.1)"},
             transition="all 0.2s ease-in-out",
