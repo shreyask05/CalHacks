@@ -116,7 +116,7 @@ def index():
             ),
 
             rx.text(
-                "Test your product's user experience with ",
+                "Test your product's UI / UX with ",
                 TextLoop(
                     rx.text.strong("ease"),
                     rx.text.strong("efficiency"),
@@ -246,7 +246,7 @@ def feature_card(title: str, description: str, icon: str) -> rx.Component:
                 border_radius='50%'
             ),
             rx.heading(title, size='6', color="white", margin_top="0.5em", align="center"),
-            rx.text(description, color="white",size='3.5', text_align="center"),
+            rx.text(description, color="black",size='3.5', text_align="center"),
             align_items="center",
             spacing="3"
         ),
@@ -270,7 +270,7 @@ def url_input():
         placeholder="Enter URL",
         name="url",
         align="center",
-        border="1px solid rgb(245,225,71)",
+        border="1px solid rgb(244, 191, 12)",
         margin_bottom='1em',
         padding="0.5em 1em",
         border_radius="md",
@@ -278,10 +278,10 @@ def url_input():
 
 def large_text_input():
     return rx.text_area(
-        placeholder="Enter detailed information...",
+        placeholder="Enter detailed information on your target audience",
         name="details",
         align="center",
-        border="1px solid rgb(245,225,71)",
+        border="1px solid rgb(244, 191, 12)",
         margin_bottom='1em',
         padding="1em",
         border_radius="md",
@@ -293,7 +293,7 @@ def clear_button():
     return rx.button(
         "Clear",
         color="black",
-        bg=rx.color("yellow", shade=11),
+        background_color="rgb(244, 191, 12)",
         on_click=State.clear_fields,  # Just clears the input fields
         padding="0.5em 2em",
         border_radius="md",
@@ -311,7 +311,7 @@ def inputs():
                         "Analyze UI",
                         type="submit",
                         color="black",
-                        bg=rx.color("yellow", shade=11),
+                        background_color="rgb(244, 191, 12)",
                         padding="0.5em 2em",
                         border_radius="md",
                         _hover={"bg": "rgb(245,225,71)"},
