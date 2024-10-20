@@ -4,6 +4,11 @@ import asyncio
 from CalHacks.main import UXENGINE
 from CalHacks.process import get_html 
 import asyncio
+<<<<<<< HEAD
+=======
+import groq as Groq
+from reflex_text_loop import TextLoop
+>>>>>>> 6f5701e0c898632bed4c3b51b3c506330e5511ea
 
 class State(rx.State):
     url: str = ""
@@ -31,9 +36,9 @@ def navbar_link(text: str, url: str) -> rx.Component:
     return rx.link(
         rx.text(text, size="5", weight="medium"),
         href=url,
-        color="white",
+        color="black",
         text_decoration="none",
-        _hover={"text_decoration": "underline"}
+        _hover={"text_decoration": "underline", "color": "white"}
     )
 
 def navbar() -> rx.Component:
@@ -100,21 +105,28 @@ def index():
         navbar(),
         rx.vstack(
             rx.heading(
-                "Welcome to Swarm",
+                rx.text(TextLoop("Welcome", "To", "Swarm", animation="just")),
                 size="9",
-                margin_top="1em"
+                margin_top="0.8em",
+                align="center",
+                margin_right="4.5em"
             ),
             rx.text(
                 "Test your product's user experience with ", rx.text.strong("ease"),
+                margin_top="3em",
                 size="5",
                 color="rgb(244, 191, 12)",
                 margin_bottom="1em",
             ),
-            rx.button(
-                "Try Swarm Now",
-                color="black",
-                background_color="rgb(244, 191, 12)",
-                size="4",
+            rx.link(
+                rx.button(
+                    "Try Swarm Now",
+                    color="black",
+                    background_color="rgb(244, 191, 12)",
+                    size="4",
+                ),
+                href="/dashboard",
+                is_external=False
             ),
             rx.divider(margin_y="1em"),
             rx.heading("Why Choose Swarm?", size="7", margin_bottom="1em"),
@@ -160,6 +172,7 @@ def index():
             padding_y="2em",
         ),
         rx.logo(),
+        align="center",
     )
 
 def how_it_works_section():
