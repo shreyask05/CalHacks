@@ -6,6 +6,7 @@ from CalHacks.process import get_html
 import asyncio
 import groq as Groq
 from reflex_text_loop import TextLoop
+from reflex_motion import motion
 
 class State(rx.State):
     url: str = ""
@@ -102,19 +103,31 @@ def index():
     return rx.box(
         navbar(),
         rx.vstack(
-            rx.heading(
-                rx.text(TextLoop("Welcome", "To", "Swarm", animation="just")),
-                size="9",
-                margin_top="0.8em",
-                align="center",
-                margin_right="4.5em"
+            motion(
+                rx.heading(
+                    "Welcome To Swarm",
+                    size="9",
+                    margin_top="0.8em",
+                    text_align="center",
+                ),
+                while_hover={"scale": 1.2},
+                while_tap={"scale": 0.9},
+                transition={"type": "spring", "stiffness": 400, "damping": 17},
             ),
             rx.text(
-                "Test your product's user experience with ", rx.text.strong("ease"),
-                margin_top="3em",
-                size="5",
+                "Test your product's user experience with ",
+                TextLoop(
+                    rx.text.strong("ease"),
+                    rx.text.strong("speed"),
+                    rx.text.strong("clarity"),
+                    rx.text.strong("simplicity"),
+                    rx.text.strong("efficiency"),
+                ),
+                margin_top="1em",
+                size="6",
                 color="rgb(244, 191, 12)",
                 margin_bottom="1em",
+                margin_right="3em"
             ),
             rx.link(
                 rx.button(
@@ -123,6 +136,7 @@ def index():
                     background_color="rgb(244, 191, 12)",
                     size="4",
                 ),
+                _hover={"color": "rgba(244, 191, 12, 0.1)"},
                 href="/dashboard",
                 is_external=False
             ),
@@ -171,6 +185,7 @@ def index():
         ),
         rx.logo(),
         align="center",
+
     )
 
 def how_it_works_section():
