@@ -4,9 +4,11 @@ import asyncio
 from CalHacks.main import UXENGINE
 from CalHacks.process import get_html 
 import asyncio
+<<<<<<< HEAD
+=======
 import groq as Groq
 from reflex_text_loop import TextLoop
-from reflex_motion import motion
+>>>>>>> 6f5701e0c898632bed4c3b51b3c506330e5511ea
 
 class State(rx.State):
     url: str = ""
@@ -17,8 +19,7 @@ class State(rx.State):
         self.url = form_data.get("url", "")
         self.details = form_data.get("details", "")
         self.is_loading = True
-        f = open("APP.html", "a")
-        get_html(self.url, f)
+        get_html(self.url, "APP.html")
         return rx.redirect("/loading")
 
     async def finish_loading(self):
@@ -103,31 +104,19 @@ def index():
     return rx.box(
         navbar(),
         rx.vstack(
-            motion(
-                rx.heading(
-                    "Welcome To Swarm",
-                    size="9",
-                    margin_top="0.8em",
-                    text_align="center",
-                ),
-                while_hover={"scale": 1.2},
-                while_tap={"scale": 0.9},
-                transition={"type": "spring", "stiffness": 400, "damping": 17},
+            rx.heading(
+                rx.text(TextLoop("Welcome", "To", "Swarm", animation="just")),
+                size="9",
+                margin_top="0.8em",
+                align="center",
+                margin_right="4.5em"
             ),
             rx.text(
-                "Test your product's user experience with ",
-                TextLoop(
-                    rx.text.strong("ease"),
-                    rx.text.strong("speed"),
-                    rx.text.strong("clarity"),
-                    rx.text.strong("simplicity"),
-                    rx.text.strong("efficiency"),
-                ),
-                margin_top="1em",
-                size="6",
+                "Test your product's user experience with ", rx.text.strong("ease"),
+                margin_top="3em",
+                size="5",
                 color="rgb(244, 191, 12)",
                 margin_bottom="1em",
-                margin_right="3em"
             ),
             rx.link(
                 rx.button(
@@ -136,7 +125,6 @@ def index():
                     background_color="rgb(244, 191, 12)",
                     size="4",
                 ),
-                _hover={"color": "rgba(244, 191, 12, 0.1)"},
                 href="/dashboard",
                 is_external=False
             ),
@@ -185,7 +173,6 @@ def index():
         ),
         rx.logo(),
         align="center",
-
     )
 
 def how_it_works_section():
