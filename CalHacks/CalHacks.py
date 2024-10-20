@@ -314,14 +314,17 @@ def large_text_input():
     )
 
 def clear_button():
-    return rx.button(
-        "Clear",
-        color="black",
-        background_color="rgb(244, 191, 12)",
-        on_click=State.clear_fields,  # Just clears the input fields
-        padding="0.5em 2em",
-        border_radius="md",
-        _hover={"bg": "rgb(245,225,71)"},
+    return rx.link(
+        rx.button(
+            "Results",
+            color="black",
+            background_color="rgb(244, 191, 12)",
+            on_click=State.clear_fields,  # Just clears the input fields
+            padding="0.5em 2em",
+            border_radius="md",
+            _hover={"bg": "rgb(245,225,71)"},
+        ),
+        href="/results",
     )
 
 def inputs():
@@ -355,9 +358,6 @@ def inputs():
             padding="2em",
         ),
         rx.divider(),
-        rx.heading("Results", size="6", margin_top='2em'),
-        rx.text("URL: " + State.url),
-        rx.text("Details: " + State.details),
         align_items="center",
         justify_content="center",
     )
@@ -524,26 +524,39 @@ def agent_card(name: str, description: str, feedback: str) -> rx.Component:
     return rx.vstack(
         rx.icon("user", color="rgb(244, 191, 12)", size=35),
         rx.text(name, font_weight="bold", color="rgb(244, 191, 12)"),
-        rx.text(description, color="white", text_align="center"),
+        rx.text(
+            description,
+            color="white",
+            text_align="center",
+            font_size="sm",
+            height="8em",  # Increase height for more text
+            overflow="hidden",
+            text_overflow="ellipsis",
+            style={"display": "-webkit-box", "WebkitLineClamp": "5", "WebkitBoxOrient": "vertical"}  # Allow up to 5 lines
+        ),
+        rx.spacer(),
         rx.popover.root(
             rx.popover.trigger(
                 rx.button(
                     "Show Feedback",
                     color="black",
                     bg="rgb(244, 191, 12)",
-                    _hover={"bg": "rgba(244, 191, 12, 0.8)"}
+                    _hover={"bg": "rgba(244, 191, 12, 0.8)"},
+                    width="100%",
+                    size="md"  # Increase button size
                 )
             ),
             rx.popover.content(
                 rx.flex(
-                    rx.heading(f"Feedback from {name}", size="lg", color="rgb(244, 191, 12)"),
-                    rx.text(feedback, color="white"),
+                    rx.heading(f"Feedback from {name}", size="md", color="rgb(244, 191, 12)"),
+                    rx.text(feedback, color="white", size="sm"),
                     rx.popover.close(
                         rx.button(
                             "Close",
                             color="black",
                             bg="rgb(244, 191, 12)",
-                            _hover={"bg": "rgba(244, 191, 12, 0.8)"}
+                            _hover={"bg": "rgba(244, 191, 12, 0.8)"},
+                            size="sm"
                         )
                     ),
                     direction="column",
@@ -559,10 +572,12 @@ def agent_card(name: str, description: str, feedback: str) -> rx.Component:
         border="1px solid rgb(244, 191, 12)",
         border_radius="lg",
         padding="1em",
-        width="200px",
-        height="200px",
+        width="300px",  # Increase width
+        height="300px",  # Increase height
         _hover={"transform": "scale(1.05)", "bg": "rgba(244, 191, 12, 0.3)"},
         transition="all 0.2s ease-in-out",
+        justify_content="space-between",
+        align_items="center",
     )
 
 def log_card(key: str, value: str) -> rx.Component:
@@ -645,7 +660,7 @@ def results_page() -> rx.Component:
                         spacing="4",
                         justify="center",
                         wrap="wrap",
-                        margin_top="10em"
+                        margin_top="5em"
                     ),
                     value="first_impression",
                 ),
@@ -664,7 +679,6 @@ def results_page() -> rx.Component:
                         border_radius="md",
                         overflow="hidden",
                     ),
-                    rx.button("Download log", on_click=rx.download(url="/web_agent.log")),
                     value="swarm_test",
                 ),
                 width="100%",

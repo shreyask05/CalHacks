@@ -62,6 +62,9 @@ def UXENGINE(url):
                 "case" : item["description"],
                 "result" : file.read().strip()
             })
+            
+    if os.path.exists("./CalHacks/results.json"):
+        os.remove("./CalHacks/results.json")
     f = open("./CalHacks/results.json", "a")
     json.dump(result, f, indent=4)
     print(result)
