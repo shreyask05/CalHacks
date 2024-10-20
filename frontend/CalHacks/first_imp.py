@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import google.generativeai as genai
 import media
+import os
 
 
 def first_impression(url):
@@ -94,6 +95,9 @@ def first_impression(url):
         })
         # impressions[result_names[user_index]] = result.text
         print(f"{result.text=}")
+    
+    if os.path.exists("./CalHacks/first_impressions.json"):
+        os.remove("./CalHacks/first_impressions.json")
     
     f = open("./CalHacks/first_impressions.json", "a")
     json.dump(impressions, f, indent=4)

@@ -1,14 +1,14 @@
 [
     {
-        "case": "\"Search for a topic\"",
+        "case": "\"View Cricket Scores\"",
         "result": "False"
     },
     {
-        "case": " \"Explore related articles\"",
-        "result": "False"
+        "case": " \"Get Live Updates\"",
+        "result": "True"
     },
     {
-        "case": " \"Contribute to the encyclopedia\"",
+        "case": " \"Join a Fantasy League\"",
         "result": "False"
     }
 ]

@@ -42,16 +42,7 @@ class State(rx.State):
         self.url = form_data.get("url", "")
         self.details = form_data.get("details", "")
         get_html(self.url, "APP.html")
-        
-        
-        
-        
         self.is_loading = True
-<<<<<<< Updated upstream
-        get_html(self.url, "APP.html")
-=======
-
->>>>>>> Stashed changes
         return rx.redirect("/loading")
 
     async def finish_loading(self):
@@ -387,7 +378,7 @@ def team_member(name: str, role: str, image: str, linkedin_url: str) -> rx.Compo
             height="100%",
             bg="white",
             padding="1em",
-            border_radius="10px",
+            border_radius="lg",
             box_shadow="lg",
             _hover={"transform": "scale(1.1)"},
             transition="all 0.2s ease-in-out",
@@ -673,6 +664,7 @@ def results_page() -> rx.Component:
                         border_radius="md",
                         overflow="hidden",
                     ),
+                    rx.button("Download log", on_click=rx.download(url="/web_agent.log")),
                     value="swarm_test",
                 ),
                 width="100%",
