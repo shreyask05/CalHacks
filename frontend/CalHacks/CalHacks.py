@@ -9,7 +9,6 @@ from reflex_text_loop import TextLoop
 from reflex_motion import motion
 import json
 
-
 class State(rx.State):
     url: str = ""
     details: str = ""
@@ -119,15 +118,15 @@ def index():
             rx.text(
                 "Test your product's UI / UX with ",
                 TextLoop(
-                    rx.text.strong("ease"),
-                    rx.text.strong("efficiency"),
-                    rx.text.strong("speed"),
-                    rx.text.strong("clarity"),
-                    rx.text.strong("consistency"),
+                    rx.text.strong("ease", color="rgb(244, 191, 12)"),
+                    rx.text.strong("efficiency", color="rgb(244, 191, 12)"),
+                    rx.text.strong("speed", color="rgb(244, 191, 12)"),
+                    rx.text.strong("clarity", color="rgb(244, 191, 12)"),
+                    rx.text.strong("consistency", color="rgb(244, 191, 12)"),
                 ),
                 margin_top="1em",
                 size="5",
-                color="rgb(244, 191, 12)",
+                color="white",
                 margin_bottom="1em",
                 margin_right="3em",
             ),
@@ -373,10 +372,10 @@ def about() -> rx.Component:
             rx.text(
                 "Revolutionizing UI/UX Testing with",
                 TextLoop(
-                    rx.text.strong("AI"),
-                    rx.text.strong("ML"),
-                    rx.text.strong("NLP"),
-                    rx.text.strong("LLM"),
+                    rx.text.strong("AI", color="white"),
+                    rx.text.strong("ML", color="white"),
+                    rx.text.strong("NLP", color="white"),
+                    rx.text.strong("LLM", color="white"),
                 ),
                 color="rgb(244, 191, 12)",
                 font_size="1.5em",
