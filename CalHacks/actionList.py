@@ -45,7 +45,7 @@ def split_text(text: str, max_length: int) -> list[str]:
 #chunked_context = split_text(html_string, 5000)  # Adjust the max_length based on your API's limits
 
 client = Groq(
-    api_key="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",
+    api_key= #apikey here lol,
 )
 def get_actionlist(chunked_context) -> ActionList:
     if os.path.exists('log.json'):
